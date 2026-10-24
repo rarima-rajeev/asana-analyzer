@@ -40,7 +40,7 @@ function drawSkeleton(canvas: HTMLCanvasElement, frame: Frame | undefined) {
   const pts = frame.points.map((p) => ({ ...p, z: 0, visibility: p.visibility ?? 1 }));
   const draw = new DrawingUtils(ctx);
   draw.drawConnectors(pts, PoseLandmarker.POSE_CONNECTIONS, { color: "#FFD84D", lineWidth: 4 });
-  draw.drawLandmarks(pts, { color: "#ffffff", fillColor: "#4f46e5", radius: 4 });
+  draw.drawLandmarks(pts, { color: "#ffffff", fillColor: "#7b2869", radius: 4 });
 }
 
 export default function TryIt() {

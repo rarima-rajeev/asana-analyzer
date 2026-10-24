@@ -1,11 +1,11 @@
 :root {
-  --bg: #f5f6fb;
+  --bg: #faf7f9;
   --card: #ffffff;
-  --text: #1e2033;
-  --muted: #5b6075;
-  --line: #dfe2ec;
-  --accent: #4f46e5;
-  --accent-soft: #ecebfd;
+  --text: #2a1f28;
+  --muted: #6b5d68;
+  --line: #ece1e8;
+  --accent: #7b2869;
+  --accent-soft: #f6e8f1;
   --warn: #b5651d;
   --warn-soft: #fbeedd;
 }
@@ -15,7 +15,7 @@ html, body { margin: 0; padding: 0; }
 body {
   background-color: var(--bg);
   /* Soft AI-generated studio photo behind every page, washed out so text stays easy to read. */
-  background-image: linear-gradient(rgba(245, 246, 251, 0.84), rgba(245, 246, 251, 0.84)), url("/bg-yoga.jpg");
+  background-image: linear-gradient(rgba(250, 247, 249, 0.84), rgba(250, 247, 249, 0.84)), url("/bg-yoga.jpg");
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
@@ -64,7 +64,7 @@ h2 { font-size: 20px; margin: 28px 0 10px; }
 }
 .controls button {
   width: 40px; height: 40px; border-radius: 50%; border: none; cursor: pointer;
-  background: rgba(255, 255, 255, 0.9); color: #1e2033; font-size: 15px;
+  background: rgba(255, 255, 255, 0.9); color: #2a1f28; font-size: 15px;
 }
 .overlay {
   position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
@@ -87,7 +87,7 @@ summary { cursor: pointer; font-weight: 600; }
 .table-wrap { overflow-x: auto; }
 table { border-collapse: collapse; width: 100%; background: var(--card); border-radius: 12px; overflow: hidden; font-size: 16px; }
 th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
-th { background: #eceef6; font-weight: 600; }
+th { background: #f3e9ef; font-weight: 600; }
 
 /* How-it-works diagram */
 .flow { display: grid; grid-template-columns: 1fr auto 1fr; gap: 14px; align-items: stretch; margin: 16px 0; }
@@ -95,8 +95,8 @@ th { background: #eceef6; font-weight: 600; }
 .zone h3 { margin: 0; font-size: 15px; text-transform: uppercase; letter-spacing: 0.04em; }
 .zone.device { background: var(--accent-soft); border: 2px solid var(--accent); }
 .zone.device h3 { color: var(--accent); }
-.zone.cloud { background: #eef1f5; border: 2px dashed #475569; }
-.zone.cloud h3 { color: #475569; }
+.zone.cloud { background: #f4f2f1; border: 2px dashed #6b6566; }
+.zone.cloud h3 { color: #6b6566; }
 .box { background: var(--card); border-radius: 10px; padding: 10px 12px; font-size: 15px; }
 .box b { display: block; }
 .arrow { display: flex; flex-direction: column; justify-content: center; align-items: center; color: var(--muted); font-size: 14px; text-align: center; max-width: 130px; }
