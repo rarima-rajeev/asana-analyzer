@@ -49,7 +49,7 @@ export default function Results() {
         <>
           <div className="card">
             <p style={{ marginTop: 0 }}>
-              <b>First try</b> (rules written before testing): 5 of 5 good videos marked correct. Only 2 of 4 mistakes caught.
+              <b>First try</b> (rules written before testing; the Triangle mistake video wasn&apos;t ready yet): 5 of 5 good videos marked correct. Only 2 of 4 mistakes caught.
             </p>
             <p>
               <b>What went wrong:</b> for Palm Tree, filmed from the side, bent elbows still looked almost straight. So I switched
@@ -58,6 +58,11 @@ export default function Results() {
             <p style={{ marginBottom: 0 }}>
               <b>Second try:</b> {passed} of 5 good videos marked correct. {caught} of {mistakesTested} mistakes caught with the right tip.
               Honest caveat: I fixed the rules using these same videos, so the second score is flattering. Fresh videos are needed to confirm it.
+            </p>
+            <p style={{ marginBottom: 0 }}>
+              <b>A lesson about the AI tip:</b> once, Gemini found the right problem but wrote a misleading tip
+              (&quot;keep your front knee soft&quot; when the leg needed straightening). Now Gemini is given the correct fix for each
+              check and only rewords it in a friendlier way. After that change, all 5 mistake tips said the right thing.
             </p>
           </div>
           <div className="table-wrap">
@@ -125,11 +130,10 @@ export default function Results() {
 
       <h2>5. Limits, said plainly</h2>
       <ul>
-        <li>Tested only on 9 AI-made videos, not on real people yet. The 10th (Triangle with a bent knee) wasn&apos;t made: the monthly AI budget cap was reached first.</li>
-        <li>During this test, the tips came from the ready-made fallback, not Gemini, because the same budget cap paused Gemini. The fallback is the safety net that keeps the product working when the AI doesn&apos;t.</li>
+        <li>Tested only on 10 AI-made videos, not on real people yet.</li>
+        <li>The video AI doesn&apos;t always follow instructions. My first Triangle-mistake video showed a different pose entirely, so I made it once more.</li>
         <li>Each pose is checked from one camera angle (front or side). Other angles may confuse it.</li>
         <li>The rules are simple beginner checks I wrote as a product manager, not a yoga teacher&apos;s full judgment.</li>
-        <li>The video-making AI sometimes does not show the exact mistake it was asked for. Where that happened, the table above shows it.</li>
         <li><b>Not a substitute for a yoga teacher. Stop if it hurts.</b></li>
       </ul>
 

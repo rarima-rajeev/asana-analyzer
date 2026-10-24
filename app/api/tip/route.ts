@@ -27,7 +27,7 @@ export async function POST(req: Request) {
   if (!key) return NextResponse.json({ tips: fallback, source: "template" });
 
   const measurements = body.rules
-    .map((r) => `- ${r.label}: passed in ${r.passRate}% of frames (typical ${r.typical}${r.unit})`)
+    .map((r) => `- ${r.label}: passed in ${r.passRate}% of frames (typical ${r.typical}${r.unit}). Correct fix: "${r.tip}"`)
     .join("\n");
   const prompt = `You are a calm, friendly yoga helper speaking to a beginner.
 Pose: ${body.poseName}. Overall score: ${body.score}% (${body.looksCorrect ? "looks correct" : "needs work"}).
@@ -36,7 +36,7 @@ ${measurements}
 
 ${body.looksCorrect
     ? "Write 1 short sentence of praise with one gentle cue to keep holding."
-    : `Write ${count} tip(s), one per weakest check (lowest % first), only about checks below 80%.`}
+    : `Write ${count} tip(s), one per weakest check (lowest % first), only about checks below 80%. Each tip must keep the exact meaning of that check's "Correct fix"; only make the wording warmer.`}
 Rules: each tip under 16 words, plain everyday words, say what to do (not what is wrong), no numbers, no medical claims.
 Return JSON: {"tips": ["..."]}`;
 

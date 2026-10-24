@@ -26,7 +26,7 @@ PROMPTS = {
     "chair-correct": "Side view. A person in chair pose: feet together, knees deeply bent as if sitting on a chair, hips back, arms raised overhead.",
     "chair-mistake": "Side view. A person in chair pose with arms raised overhead but knees only slightly bent, standing almost straight.",
     "triangle-correct": "Front view. A person in triangle pose: wide stance, both legs straight, leaning sideways with the lower hand at the shin and the upper arm pointing straight up.",
-    "triangle-mistake": "Front view. A person in triangle pose with a wide stance and arms in one vertical line, but the front knee is clearly bent.",
+    "triangle-mistake": "Front view, full color. A person in triangle pose: very wide stance, upper body tipped far sideways over the right leg, right hand resting on the right shin, left arm pointing straight up so both arms form one vertical line. The mistake: the right (front) knee is clearly bent instead of straight.",
 }
 
 

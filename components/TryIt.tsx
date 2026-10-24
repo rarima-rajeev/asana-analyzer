@@ -7,7 +7,7 @@ import { Analysis, Frame, findBodyPoints, scoreFrames } from "@/lib/analyze";
 import { tipCount, track } from "@/lib/experiment";
 
 // Samples not made yet (the video budget cap was reached). Remove once the clip exists.
-const NOT_READY = new Set(["triangle-mistake"]);
+const NOT_READY = new Set<string>();
 
 type Source = { kind: "correct" | "mistake" | "upload"; url: string };
 
