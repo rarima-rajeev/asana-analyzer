@@ -11,7 +11,7 @@ export default function HowItWorks() {
       <div className="flow" role="img" aria-label="Diagram: video is analyzed on your device; only numbers go to Gemini, which sends back a tip that your device speaks.">
         <div className="zone device">
           <h3>On your device</h3>
-          <div className="box"><b>1. Your video</b>Stays here. Never uploaded.</div>
+          <div className="box"><b>1. The video</b>Analyzed right here. Never uploaded.</div>
           <div className="box"><b>2. Find body points</b>Google&apos;s MediaPipe Pose marks 33 points, like elbows and knees.</div>
           <div className="box"><b>3. Measure and score</b>Simple rules check angles, like &quot;Is the knee bent?&quot;</div>
           <div className="box"><b>5. Say the tip out loud</b>Uses your browser&apos;s built-in voice.</div>

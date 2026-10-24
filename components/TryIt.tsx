@@ -6,10 +6,7 @@ import { POSES, Pose } from "@/lib/poses";
 import { Analysis, Frame, findBodyPoints, scoreFrames } from "@/lib/analyze";
 import { tipCount, track } from "@/lib/experiment";
 
-// Samples not made yet (the video budget cap was reached). Remove once the clip exists.
-const NOT_READY = new Set<string>();
-
-type Source = { kind: "correct" | "mistake" | "upload"; url: string };
+type Source = { kind: "correct" | "mistake"; url: string };
 
 async function getTips(pose: Pose, a: Analysis, count: number): Promise<{ tips: string[]; source: string }> {
   const tipsByRule = Object.fromEntries(pose.rules.map((r) => [r.id, r.tip]));
@@ -35,19 +32,15 @@ function speak(text: string) {
   window.speechSynthesis.speak(u);
 }
 
-function drawSkeleton(canvas: HTMLCanvasElement, frame: Frame | undefined, plain: boolean) {
+function drawSkeleton(canvas: HTMLCanvasElement, frame: Frame | undefined) {
   const ctx = canvas.getContext("2d");
   if (!ctx) return;
   ctx.clearRect(0, 0, canvas.width, canvas.height);
-  if (plain) {
-    ctx.fillStyle = "#1f2a24";
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-  }
   if (!frame?.points) return;
   const pts = frame.points.map((p) => ({ ...p, z: 0, visibility: p.visibility ?? 1 }));
   const draw = new DrawingUtils(ctx);
-  draw.drawConnectors(pts, PoseLandmarker.POSE_CONNECTIONS, { color: "#7CFFB2", lineWidth: 4 });
-  draw.drawLandmarks(pts, { color: "#ffffff", fillColor: "#1d8a54", radius: 4 });
+  draw.drawConnectors(pts, PoseLandmarker.POSE_CONNECTIONS, { color: "#FFD84D", lineWidth: 4 });
+  draw.drawLandmarks(pts, { color: "#ffffff", fillColor: "#4f46e5", radius: 4 });
 }
 
 export default function TryIt() {
@@ -57,6 +50,7 @@ export default function TryIt() {
   const [analysis, setAnalysis] = useState<Analysis | null>(null);
   const [tips, setTips] = useState<string[]>([]);
   const [error, setError] = useState<string | null>(null);
+  const [playing, setPlaying] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const runs = useRef(0);
@@ -119,13 +113,13 @@ export default function TryIt() {
         }
         const frame = analysis.frames.reduce((best, f) =>
           Math.abs(f.t - v.currentTime) < Math.abs(best.t - v.currentTime) ? f : best, analysis.frames[0]);
-        drawSkeleton(c, frame, source?.kind === "upload");
+        drawSkeleton(c, frame);
       }
       raf = requestAnimationFrame(loop);
     };
     loop();
     return () => cancelAnimationFrame(raf);
-  }, [analysis, source]);
+  }, [analysis]);
 
   function pickPose(p: Pose) {
     setPose(p);
@@ -138,13 +132,12 @@ export default function TryIt() {
     setSource({ kind, url: `/videos/${pose.id}-${kind}.mp4` });
   }
 
-  function pickUpload(file: File | undefined) {
-    if (!file) return;
-    if (source?.kind === "upload") URL.revokeObjectURL(source.url);
-    setSource({ kind: "upload", url: URL.createObjectURL(file) }); // stays on this device
+  function togglePlay() {
+    const v = videoRef.current;
+    if (!v) return;
+    if (v.paused) v.play().catch(() => {});
+    else v.pause();
   }
-
-  const isUpload = source?.kind === "upload";
 
   return (
     <div className="tryit">
@@ -158,7 +151,7 @@ export default function TryIt() {
           ))}
         </div>
         <p className="muted">
-          <strong>{pose.name}:</strong> {pose.howTo} Film from the {pose.view}.
+          <strong>{pose.name}:</strong> {pose.howTo} Seen from the {pose.view}.
         </p>
       </section>
 
@@ -168,22 +161,17 @@ export default function TryIt() {
           <button className={source?.kind === "correct" ? "chip on" : "chip"} onClick={() => pickSample("correct")}>
             Sample: done right
           </button>
-          <button
-            className={source?.kind === "mistake" ? "chip on" : "chip"}
-            onClick={() => pickSample("mistake")}
-            disabled={NOT_READY.has(`${pose.id}-mistake`)}
-          >
-            {NOT_READY.has(`${pose.id}-mistake`) ? "Sample: common mistake (coming soon)" : "Sample: common mistake"}
+          <button className={source?.kind === "mistake" ? "chip on" : "chip"} onClick={() => pickSample("mistake")}>
+            Sample: common mistake
           </button>
-          <label className={isUpload ? "chip on" : "chip"}>
-            Use my own video
-            <input type="file" accept="video/*" hidden onChange={(e) => pickUpload(e.target.files?.[0])} />
-          </label>
+          <button className="chip" disabled>
+            Use my own video (coming later)
+          </button>
         </div>
         <p className="muted small">
           Sample videos are AI-generated (Google Gemini Omni Flash). Common mistake shown: {pose.mistake.toLowerCase()}.
           <br />
-          Your own video stays on your device. It is never uploaded or saved. You will see only your stick figure.
+          Using your own video is switched off for now. It will come back once there are safety checks in place.
         </p>
       </section>
 
@@ -198,9 +186,19 @@ export default function TryIt() {
               playsInline
               loop
               preload="auto"
-              className={isUpload ? "hidden-video" : ""}
+              onPlay={() => setPlaying(true)}
+              onPause={() => setPlaying(false)}
+              onClick={togglePlay}
             />
-            <canvas ref={canvasRef} className={isUpload ? "plain" : ""} />
+            <canvas ref={canvasRef} onClick={togglePlay} />
+            {analysis && (
+              <div className="controls">
+                <button onClick={togglePlay} aria-label={playing ? "Pause" : "Play"}>
+                  {playing ? "❚❚" : "▶"}
+                </button>
+                <span>{playing ? "Pause" : "Play"}</span>
+              </div>
+            )}
             {progress !== null && (
               <div className="overlay">Finding body points… {Math.round(progress * 100)}%</div>
             )}

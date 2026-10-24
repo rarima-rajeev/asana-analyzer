@@ -123,9 +123,12 @@ export default function Results() {
 
       <h2>4. Privacy decision</h2>
       <p>
-        I chose to analyze the video <b>on the visitor&apos;s device</b>. The video is never uploaded or saved. For your own video, the screen
-        shows only a stick figure. Only a few numbers, like knee angles, are sent to Gemini to write the tip.
-        The trade-off: phone-side models are smaller than cloud ones, so they can be less accurate in poor light or odd camera angles.
+        I chose to analyze the video <b>on the visitor&apos;s device</b>, not in the cloud. Video is never uploaded or saved.
+        Only a few numbers, like knee angles, are sent to Gemini to write the tip.
+        The trade-off: models that run on a phone are smaller than cloud ones, so they can be less accurate in poor light or at odd camera angles.
+        <br /><br />
+        I also <b>switched off &quot;use my own video&quot;</b> for this public demo. Even though nothing would be stored, an open upload
+        button invites misuse, such as offensive content. It comes back only with safety checks in place.
       </p>
 
       <h2>5. Limits, said plainly</h2>
@@ -141,6 +144,7 @@ export default function Results() {
       <ul>
         <li>Test with real people of different ages, body types, clothes and rooms.</li>
         <li>Switch on the live 1-tip vs 3-tip test.</li>
+        <li>Bring back &quot;use my own video&quot;, with safety checks first: block anything that isn&apos;t one person doing a pose, and show only the stick figure.</li>
         <li>Then, only if people use it: more poses and more camera angles.</li>
       </ul>
     </>
