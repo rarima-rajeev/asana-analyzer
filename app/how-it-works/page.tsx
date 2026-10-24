@@ -1,12 +1,25 @@
+import Image from "next/image";
+
 export const metadata = { title: "How it works · Asana Analyzer" };
 
 export default function HowItWorks() {
   return (
     <>
-      <h1>How it works</h1>
-      <p className="lead">
-        Most of the work happens on your own phone or laptop. Only a few numbers go to the cloud.
-      </p>
+      <div className="hero">
+        <div>
+          <h1>How it works</h1>
+          <p className="lead">
+            Most of the work happens on your own phone or laptop. Only a few numbers go to the cloud.
+          </p>
+        </div>
+        <Image
+          src="/images/device.webp"
+          alt="Illustration of a phone on a yoga mat showing a stick figure and speaking a tip"
+          width={1200}
+          height={900}
+          priority
+        />
+      </div>
 
       <div className="flow" role="img" aria-label="Diagram: video is analyzed on your device; only numbers go to Gemini, which sends back a tip that your device speaks.">
         <div className="zone device">
