@@ -22,6 +22,8 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <main>{children}</main>
         <footer>
           Not a substitute for a yoga teacher. Stop if it hurts.
+          <br />
+          <span className="small">Background image and sample videos are AI-generated (Google Gemini).</span>
         </footer>
       </body>
     </html>
