@@ -54,6 +54,7 @@ export default function TryIt() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const runs = useRef(0);
+  const tipCutOff = useRef(false); // the spoken tip was stopped by Pause
 
   useEffect(() => {
     if (process.env.NODE_ENV !== "development") return;
@@ -186,8 +187,19 @@ export default function TryIt() {
               playsInline
               loop
               preload="auto"
-              onPlay={() => setPlaying(true)}
-              onPause={() => setPlaying(false)}
+              onPlay={() => {
+                setPlaying(true);
+                // Pick up the tip again if Pause cut it off (browsers can't resume speech mid-sentence reliably).
+                if (tipCutOff.current && tips.length) speak(tips.join(" "));
+                tipCutOff.current = false;
+              }}
+              onPause={() => {
+                setPlaying(false);
+                if (window.speechSynthesis?.speaking) {
+                  window.speechSynthesis.cancel();
+                  tipCutOff.current = true;
+                }
+              }}
               onClick={togglePlay}
             />
             <canvas ref={canvasRef} onClick={togglePlay} />
