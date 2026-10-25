@@ -192,7 +192,7 @@ export default function TryIt() {
           <br />
           Using your own video is switched off for now. It will come back once there are safety checks in place.
           <br />
-          🔒 <strong>Privacy:</strong> the video is checked right here in your browser and is never uploaded. Only a few
+          🔒 <strong>Privacy:</strong> the video is checked right here in your browser and is never uploaded to the cloud. Only a few
           numbers, like knee angles, go to Google Gemini to write the tip.
         </p>
       </section>
