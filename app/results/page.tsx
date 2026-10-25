@@ -37,7 +37,7 @@ export default function Results() {
       <h1>Offline evals: Results &amp; decisions</h1>
       <p className="lead">What I tested, what I found, and the product choices behind it.</p>
       <p className="muted small">
-        * Online evals (checking the scores and tips on real people&apos;s videos) are to be carried out by a yoga practitioner.
+        * Online evals: checking the scores and tips on real people&apos;s videos are to be carried out by a yoga practitioner.
         <br />
         * Offline evals: the product&apos;s answers were checked against a fixed answer key by plain code. No AI acted as the judge.
       </p>
