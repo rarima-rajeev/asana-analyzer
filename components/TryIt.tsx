@@ -191,6 +191,9 @@ export default function TryIt() {
           Sample videos are AI-generated (Google Gemini Omni Flash). Common mistake shown: {pose.mistake.toLowerCase()}.
           <br />
           Using your own video is switched off for now. It will come back once there are safety checks in place.
+          <br />
+          🔒 <strong>Privacy:</strong> the video is checked right here in your browser and is never uploaded. Only a few
+          numbers, like knee angles, go to Google Gemini to write the tip.
         </p>
       </section>
 
