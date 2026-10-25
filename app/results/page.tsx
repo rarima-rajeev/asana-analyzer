@@ -109,40 +109,7 @@ export default function Results() {
         </li>
       </ul>
 
-      <h2>3. What counts as success: the activation metric</h2>
-      <p>
-        <b>Activation</b> is the moment a new visitor first gets real value from the product. Here, that means
-        the visitor <b>gets their first score and hears a tip</b> on their first visit. Before that moment, they have only clicked around.
-      </p>
-      <div className="table-wrap">
-        <table>
-          <tbody>
-            <tr><th>The visitor&apos;s journey</th><td>Picks a pose → plays a video → <b>sees a score and hears a tip</b> (activated) → <b>tries another video</b></td></tr>
-            <tr><th>Activation rate</th><td>Visitors who saw their first score and tip ÷ all new visitors</td></tr>
-            <tr><th>Why this moment</th><td>It&apos;s the first time the product delivers its promise: &quot;Am I doing this pose correctly?&quot; gets an answer.</td></tr>
-            <tr><th>Follow-up signal</th><td><b>Try-again rate:</b> the share of activated visitors who run another video in the same visit. It shows the tip was useful enough to act on.</td></tr>
-            <tr><th>Where people drop off</th><td>Comparing each step shows where people get stuck, for example if many start a video but leave before the score appears, loading is too slow.</td></tr>
-            <tr><th>Status</th><td>The site already marks these three steps (video started, first score shown, tried again). They will be counted once analytics (PostHog) is switched on. No real numbers yet.</td></tr>
-          </tbody>
-        </table>
-      </div>
-
-      <h2>4. A/B test: 1 tip or 3 tips?</h2>
-      <div className="table-wrap">
-        <table>
-          <tbody>
-            <tr><th>Question</th><td>Do people improve more with one tip, or with three?</td></tr>
-            <tr><th>My guess</th><td>One tip is easier to act on mid-pose, so more people will try again.</td></tr>
-            <tr><th>Split</th><td>Half of visitors hear 1 tip, half hear up to 3. Each visitor always stays in the same group.</td></tr>
-            <tr><th>Main measure</th><td>Try-again rate: the share of people who run a second video after hearing the tip.</td></tr>
-            <tr><th>Safety checks</th><td>Do people listen to the end? Does the tip arrive quickly?</td></tr>
-            <tr><th>When to stop</th><td>After 2 weeks or about 400 visitors per group, whichever comes first.</td></tr>
-            <tr><th>Status</th><td>Designed and wired into the code. The live split will be switched on with PostHog (a product analytics tool). Until then, everyone hears 1 tip.</td></tr>
-          </tbody>
-        </table>
-      </div>
-
-      <h2>5. Privacy decision</h2>
+      <h2>3. Privacy decision</h2>
       <p>
         I chose to analyze the video <b>on the visitor&apos;s device</b>, not in the cloud. Video is never uploaded or saved.
         Only a few numbers, like knee angles, are sent to Gemini to write the tip.
@@ -152,7 +119,7 @@ export default function Results() {
         button invites misuse, such as offensive content. It comes back only with safety checks in place.
       </p>
 
-      <h2>6. Limits, said plainly</h2>
+      <h2>4. Limits, said plainly</h2>
       <ul>
         <li>Tested only on 10 AI-made videos, not on real people yet.</li>
         <li>The video AI doesn&apos;t always follow instructions. My first Triangle-mistake video showed a different pose entirely, so I made it once more.</li>
@@ -161,10 +128,9 @@ export default function Results() {
         <li><b>Not a substitute for a yoga teacher. Stop if it hurts.</b></li>
       </ul>
 
-      <h2>7. What&apos;s next</h2>
+      <h2>5. What&apos;s next</h2>
       <ul>
         <li>Test with real people of different ages, body types, clothes and rooms.</li>
-        <li>Switch on the live 1-tip vs 3-tip test.</li>
         <li>Bring back &quot;use my own video&quot;, with safety checks first: block anything that isn&apos;t one person doing a pose, and show only the stick figure.</li>
         <li>Then, only if people use it: more poses and more camera angles.</li>
       </ul>
