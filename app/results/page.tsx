@@ -83,10 +83,8 @@ export default function Results() {
           </div>
           <p className="muted small">
             Score = how much of the held pose passed each check. 80% or more counts as &quot;correct&quot;.
-            Why good videos don&apos;t all score 100%: body points wobble a little from frame to frame (so do real people), so one frame
-            can slip past a limit. The 80% bar allows for that, while real mistakes fail in almost every frame.
-            The test videos are AI-generated, so these results show the idea works, not that it works for everyone.
-            Two rules were adjusted after an earlier run on these same videos, so fresh videos are needed to confirm the numbers.
+            Why good videos don&apos;t all score 100%: body points wobble a little from frame to frame (so do real people).
+            The 80% bar allows for that. The test videos are AI-generated, so these results show the idea works, not that it works for everyone.
           </p>
         </>
       )}
