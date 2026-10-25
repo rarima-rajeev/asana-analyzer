@@ -80,3 +80,12 @@
 
 ## Scope guard
 Exactly 3 pages. Not now: GitHub, deploy, live PostHog split (a no-op hook only). **Later list:** more poses, side + front views, rep counting, other languages for the voice.
+
+## Later: growing it into a real product (ideas only, not building now)
+| Step | What | Why |
+|---|---|---|
+| 1. Validate | 5–10 real people try a **live camera** version (coaching while you hold the pose) | Proves accuracy on real bodies and rooms; measures try-again rate |
+| 2. More poses | 10–15 more poses, rules checked by a certified yoga teacher | Each pose needs its own rules; expert backing keeps tips safe |
+| 3. Muscle map | Simple **2D body map** highlighting muscles each pose works (3D only if users ask) | Most of the value of 3D at a fraction of the effort; anatomy content must be expert-checked |
+| 4. MCP | "Yoga knowledge" MCP tools for AI assistants (pose guide, common mistakes, muscles, beginner routines); later a "check these angles" tool that receives numbers, never video | A distribution channel, not the product; keeps the privacy-first design |
+| Also | Own-video upload with safety checks; rep counting; other voice languages | From earlier reviews |
