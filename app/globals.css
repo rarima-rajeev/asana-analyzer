@@ -62,6 +62,9 @@ h2 { font-size: 20px; margin: 28px 0 10px; }
   position: absolute; left: 0; right: 0; bottom: 0; display: flex; align-items: center; gap: 10px;
   padding: 10px 14px; background: linear-gradient(transparent, rgba(0, 0, 0, 0.65)); color: #fff; font-size: 15px;
 }
+.volume { margin-left: auto; display: flex; align-items: center; gap: 8px; }
+.volume input[type="range"] { width: 90px; accent-color: #fff; cursor: pointer; }
+@media (max-width: 640px) { .volume .small { display: none; } .volume input[type="range"] { width: 70px; } }
 .controls button {
   width: 40px; height: 40px; border-radius: 50%; border: none; cursor: pointer;
   background: rgba(255, 255, 255, 0.9); color: #2a1f28; font-size: 15px;

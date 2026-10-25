@@ -24,11 +24,15 @@ async function getTips(pose: Pose, a: Analysis, count: number): Promise<{ tips: 
   return r.json();
 }
 
+let tipVolume = 1; // 0 = muted, 1 = full
+
 function speak(text: string) {
   if (typeof window === "undefined" || !("speechSynthesis" in window)) return;
   window.speechSynthesis.cancel();
+  if (tipVolume === 0) return;
   const u = new SpeechSynthesisUtterance(text);
   u.rate = 0.95;
+  u.volume = tipVolume;
   window.speechSynthesis.speak(u);
 }
 
@@ -51,6 +55,9 @@ export default function TryIt() {
   const [tips, setTips] = useState<string[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [playing, setPlaying] = useState(false);
+  const [volume, setVolumeState] = useState(1);
+  const lastVolume = useRef(1); // what Unmute goes back to
+  const respeakTimer = useRef<number | undefined>(undefined);
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const runs = useRef(0);
@@ -133,6 +140,17 @@ export default function TryIt() {
     setSource({ kind, url: `/videos/${pose.id}-${kind}.mp4` });
   }
 
+  // Browsers can't change the volume of speech already playing, so restart the tip at the new volume.
+  function setVolume(v: number) {
+    tipVolume = v;
+    setVolumeState(v);
+    if (v > 0) lastVolume.current = v;
+    if (!window.speechSynthesis?.speaking && v > 0) return;
+    window.clearTimeout(respeakTimer.current);
+    if (v === 0) window.speechSynthesis.cancel();
+    else respeakTimer.current = window.setTimeout(() => speak(tips.join(" ")), 250);
+  }
+
   function togglePlay() {
     const v = videoRef.current;
     if (!v) return;
@@ -209,6 +227,24 @@ export default function TryIt() {
                   {playing ? "❚❚" : "▶"}
                 </button>
                 <span>{playing ? "Pause" : "Play"}</span>
+                <div className="volume">
+                  <button
+                    onClick={() => setVolume(volume === 0 ? lastVolume.current : 0)}
+                    aria-label={volume === 0 ? "Unmute tip" : "Mute tip"}
+                  >
+                    {volume === 0 ? "🔇" : "🔊"}
+                  </button>
+                  <input
+                    type="range"
+                    min={0}
+                    max={1}
+                    step={0.1}
+                    value={volume}
+                    onChange={(e) => setVolume(Number(e.target.value))}
+                    aria-label="Tip volume"
+                  />
+                  <span className="small">Tip volume</span>
+                </div>
               </div>
             )}
             {progress !== null && (
