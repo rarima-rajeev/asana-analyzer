@@ -38,6 +38,8 @@ export default function Results() {
       <p className="lead">What I tested, what I found, and the product choices behind it.</p>
       <p className="muted small">
         * Online evals (checking the scores and tips on real people&apos;s videos) are to be carried out by a yoga practitioner.
+        <br />
+        * Offline evals: the product&apos;s answers were checked against a fixed answer key by plain code. No AI acted as the judge.
       </p>
 
       <h2>1. Does it work?</h2>
