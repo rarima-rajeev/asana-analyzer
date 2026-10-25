@@ -1,7 +1,7 @@
 import evalRows from "@/data/eval.json";
 import { POSES } from "@/lib/poses";
 
-export const metadata = { title: "Results & decisions · Asana Analyzer" };
+export const metadata = { title: "Offline evals: Results & decisions · Asana Analyzer" };
 
 type Row = {
   pose: string; kind: "correct" | "mistake"; score: number; looksCorrect: boolean;
@@ -34,8 +34,11 @@ export default function Results() {
 
   return (
     <>
-      <h1>Results &amp; decisions</h1>
+      <h1>Offline evals: Results &amp; decisions</h1>
       <p className="lead">What I tested, what I found, and the product choices behind it.</p>
+      <p className="muted small">
+        * Online evals (checking the scores and tips on real people&apos;s videos) are to be carried out by a yoga practitioner.
+      </p>
 
       <h2>1. Does it work?</h2>
       <p>
@@ -47,25 +50,9 @@ export default function Results() {
         <p className="card">Test not run yet.</p>
       ) : (
         <>
-          <div className="card">
-            <p style={{ marginTop: 0 }}>
-              <b>First try</b> (rules written before testing, with the earlier standing Mountain; the Triangle mistake video wasn&apos;t ready yet): 5 of 5 good videos marked correct. Only 2 of 4 mistakes caught.
-            </p>
-            <p>
-              <b>What went wrong:</b> for Palm Tree, filmed from the side, bent elbows still looked almost straight. So I switched
-              to checking how high the hands reach. For Chair, my &quot;knees bent&quot; limit was too loose by 1 degree, so I tightened it.
-            </p>
-            <p style={{ marginBottom: 0 }}>
-              <b>Latest run:</b> {passed} of 5 good videos marked correct. {caught} of {mistakesTested} mistakes caught with the right tip.
-              The one miss: the AI-made &quot;done right&quot; Mountain video lifted its heels, and the checker flagged it. The checker was right; the video was not.
-              Honest caveat: I fixed the rules using these same videos, so the second score is flattering. Fresh videos are needed to confirm it.
-            </p>
-            <p style={{ marginBottom: 0 }}>
-              <b>A lesson about the AI tip:</b> once, Gemini found the right problem but wrote a misleading tip
-              (&quot;keep your front knee soft&quot; when the leg needed straightening). Now Gemini is given the correct fix for each
-              check and only rewords it in a friendlier way. After that change, all 5 mistake tips said the right thing.
-            </p>
-          </div>
+          <p className="card">
+            <b>{passed} of 5</b> good videos marked correct. <b>{caught} of {mistakesTested}</b> mistakes caught with the right tip.
+          </p>
           <div className="table-wrap">
             <table>
               <thead>
@@ -99,6 +86,7 @@ export default function Results() {
             Why good videos don&apos;t all score 100%: body points wobble a little from frame to frame (so do real people), so one frame
             can slip past a limit. The 80% bar allows for that, while real mistakes fail in almost every frame.
             The test videos are AI-generated, so these results show the idea works, not that it works for everyone.
+            Two rules were adjusted after an earlier run on these same videos, so fresh videos are needed to confirm the numbers.
           </p>
         </>
       )}
@@ -123,9 +111,21 @@ export default function Results() {
 
       <h2>3. What counts as success: the activation metric</h2>
       <p>
-        <b>Activation</b> (the moment a new visitor first gets real value) = the visitor <b>gets their first score and hears a tip</b>.
-        The follow-up signal I care most about is <b>trying again</b> after the tip. That shows the tip was useful enough to act on.
+        <b>Activation</b> is the moment a new visitor first gets real value from the product. Here, that means
+        the visitor <b>gets their first score and hears a tip</b> on their first visit. Before that moment, they have only clicked around.
       </p>
+      <div className="table-wrap">
+        <table>
+          <tbody>
+            <tr><th>The visitor&apos;s journey</th><td>Picks a pose → plays a video → <b>sees a score and hears a tip</b> (activated) → <b>tries another video</b></td></tr>
+            <tr><th>Activation rate</th><td>Visitors who saw their first score and tip ÷ all new visitors</td></tr>
+            <tr><th>Why this moment</th><td>It&apos;s the first time the product delivers its promise: &quot;Am I doing this pose correctly?&quot; gets an answer.</td></tr>
+            <tr><th>Follow-up signal</th><td><b>Try-again rate:</b> the share of activated visitors who run another video in the same visit. It shows the tip was useful enough to act on.</td></tr>
+            <tr><th>Where people drop off</th><td>Comparing each step shows where people get stuck, for example if many start a video but leave before the score appears, loading is too slow.</td></tr>
+            <tr><th>Status</th><td>The site already marks these three steps (video started, first score shown, tried again). They will be counted once analytics (PostHog) is switched on. No real numbers yet.</td></tr>
+          </tbody>
+        </table>
+      </div>
 
       <h2>4. A/B test: 1 tip or 3 tips?</h2>
       <div className="table-wrap">
