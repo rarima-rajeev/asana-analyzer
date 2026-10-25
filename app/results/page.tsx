@@ -91,25 +91,7 @@ export default function Results() {
         </>
       )}
 
-      <h2>2. Challenges I ran into</h2>
-      <ul>
-        <li>
-          <b>The same name means different poses.</b> In Western yoga, &quot;Mountain&quot; means standing tall. In Indian yoga, Mountain
-          (Parvatasana) is the inverted V from the Sun Salutation. I first built the Western one, caught the mismatch in review,
-          and switched to Parvatasana. Lesson: check what words mean to <i>your</i> users.
-        </li>
-        <li>
-          <b>The video AI didn&apos;t always follow instructions.</b> It sometimes softened the mistakes I asked for, once drew a different
-          pose entirely, and kept lifting the heels in Parvatasana even when told to keep them flat. Lesson: AI-made test data needs
-          checking too, so I looked at frames from every video before using it.
-        </li>
-        <li>
-          <b>The checker caught the video AI&apos;s error.</b> The &quot;done right&quot; Mountain video has its heels lifted. Instead of
-          making more videos until one passed, I kept it and report the miss, because hand-picking test data hides problems.
-        </li>
-      </ul>
-
-      <h2>3. Privacy decision</h2>
+      <h2>2. Privacy decision</h2>
       <p>
         I chose to analyze the video <b>on the visitor&apos;s device</b>, not in the cloud. Video is never uploaded or saved.
         Only a few numbers, like knee angles, are sent to Gemini to write the tip.
@@ -119,16 +101,15 @@ export default function Results() {
         button invites misuse, such as offensive content. It comes back only with safety checks in place.
       </p>
 
-      <h2>4. Limits, said plainly</h2>
+      <h2>3. Limits, said plainly</h2>
       <ul>
         <li>Tested only on 10 AI-made videos, not on real people yet.</li>
-        <li>The video AI doesn&apos;t always follow instructions. My first Triangle-mistake video showed a different pose entirely, so I made it once more.</li>
         <li>Each pose is checked from one camera angle (front or side). Other angles may confuse it.</li>
-        <li>The rules are simple beginner checks I wrote as a product manager, not a yoga teacher&apos;s full judgment.</li>
+        <li>The rules are simple beginner checks, not a yoga teacher&apos;s full judgment.</li>
         <li><b>Not a substitute for a yoga teacher. Stop if it hurts.</b></li>
       </ul>
 
-      <h2>5. What&apos;s next</h2>
+      <h2>4. What&apos;s next</h2>
       <ul>
         <li>Test with real people of different ages, body types, clothes and rooms.</li>
         <li>Bring back &quot;use my own video&quot;, with safety checks first: block anything that isn&apos;t one person doing a pose, and show only the stick figure.</li>
