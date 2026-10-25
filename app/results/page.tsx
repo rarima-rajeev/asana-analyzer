@@ -5,7 +5,7 @@ export const metadata = { title: "Results & decisions · Asana Analyzer" };
 
 type Row = {
   pose: string; kind: "correct" | "mistake"; score: number; looksCorrect: boolean;
-  flaggedRule: string | null; expectedRule: string | null; tip: string; tipSource: string;
+  flaggedRule: string | null; expectedRules: string[] | null; tip: string; tipSource: string;
   missing?: boolean;
 };
 
@@ -25,7 +25,7 @@ export default function Results() {
       wrong,
       rightOk: !!right?.looksCorrect,
       caught: !!wrong && !wrong.looksCorrect,
-      rightTip: !!wrong && !wrong.looksCorrect && wrong.flaggedRule === p.mistakeRule,
+      rightTip: !!wrong && !wrong.looksCorrect && p.mistakeRules.includes(wrong.flaggedRule ?? ""),
     };
   });
   const passed = perPose.filter((x) => x.rightOk).length;
@@ -49,14 +49,15 @@ export default function Results() {
         <>
           <div className="card">
             <p style={{ marginTop: 0 }}>
-              <b>First try</b> (rules written before testing; the Triangle mistake video wasn&apos;t ready yet): 5 of 5 good videos marked correct. Only 2 of 4 mistakes caught.
+              <b>First try</b> (rules written before testing, with the earlier standing Mountain; the Triangle mistake video wasn&apos;t ready yet): 5 of 5 good videos marked correct. Only 2 of 4 mistakes caught.
             </p>
             <p>
               <b>What went wrong:</b> for Palm Tree, filmed from the side, bent elbows still looked almost straight. So I switched
               to checking how high the hands reach. For Chair, my &quot;knees bent&quot; limit was too loose by 1 degree, so I tightened it.
             </p>
             <p style={{ marginBottom: 0 }}>
-              <b>Second try:</b> {passed} of 5 good videos marked correct. {caught} of {mistakesTested} mistakes caught with the right tip.
+              <b>Latest run:</b> {passed} of 5 good videos marked correct. {caught} of {mistakesTested} mistakes caught with the right tip.
+              The one miss: the AI-made &quot;done right&quot; Mountain video lifted its heels, and the checker flagged it. The checker was right; the video was not.
               Honest caveat: I fixed the rules using these same videos, so the second score is flattering. Fresh videos are needed to confirm it.
             </p>
             <p style={{ marginBottom: 0 }}>
@@ -95,18 +96,38 @@ export default function Results() {
           </div>
           <p className="muted small">
             Score = how much of the held pose passed each check. 80% or more counts as &quot;correct&quot;.
+            Why good videos don&apos;t all score 100%: body points wobble a little from frame to frame (so do real people), so one frame
+            can slip past a limit. The 80% bar allows for that, while real mistakes fail in almost every frame.
             The test videos are AI-generated, so these results show the idea works, not that it works for everyone.
           </p>
         </>
       )}
 
-      <h2>2. What counts as success: the activation metric</h2>
+      <h2>2. Challenges I ran into</h2>
+      <ul>
+        <li>
+          <b>The same name means different poses.</b> In Western yoga, &quot;Mountain&quot; means standing tall. In Indian yoga, Mountain
+          (Parvatasana) is the inverted V from the Sun Salutation. I first built the Western one, caught the mismatch in review,
+          and switched to Parvatasana. Lesson: check what words mean to <i>your</i> users.
+        </li>
+        <li>
+          <b>The video AI didn&apos;t always follow instructions.</b> It sometimes softened the mistakes I asked for, once drew a different
+          pose entirely, and kept lifting the heels in Parvatasana even when told to keep them flat. Lesson: AI-made test data needs
+          checking too, so I looked at frames from every video before using it.
+        </li>
+        <li>
+          <b>The checker caught the video AI&apos;s error.</b> The &quot;done right&quot; Mountain video has its heels lifted. Instead of
+          making more videos until one passed, I kept it and report the miss, because hand-picking test data hides problems.
+        </li>
+      </ul>
+
+      <h2>3. What counts as success: the activation metric</h2>
       <p>
         <b>Activation</b> (the moment a new visitor first gets real value) = the visitor <b>gets their first score and hears a tip</b>.
         The follow-up signal I care most about is <b>trying again</b> after the tip. That shows the tip was useful enough to act on.
       </p>
 
-      <h2>3. A/B test: 1 tip or 3 tips?</h2>
+      <h2>4. A/B test: 1 tip or 3 tips?</h2>
       <div className="table-wrap">
         <table>
           <tbody>
@@ -121,7 +142,7 @@ export default function Results() {
         </table>
       </div>
 
-      <h2>4. Privacy decision</h2>
+      <h2>5. Privacy decision</h2>
       <p>
         I chose to analyze the video <b>on the visitor&apos;s device</b>, not in the cloud. Video is never uploaded or saved.
         Only a few numbers, like knee angles, are sent to Gemini to write the tip.
@@ -131,7 +152,7 @@ export default function Results() {
         button invites misuse, such as offensive content. It comes back only with safety checks in place.
       </p>
 
-      <h2>5. Limits, said plainly</h2>
+      <h2>6. Limits, said plainly</h2>
       <ul>
         <li>Tested only on 10 AI-made videos, not on real people yet.</li>
         <li>The video AI doesn&apos;t always follow instructions. My first Triangle-mistake video showed a different pose entirely, so I made it once more.</li>
@@ -140,7 +161,7 @@ export default function Results() {
         <li><b>Not a substitute for a yoga teacher. Stop if it hurts.</b></li>
       </ul>
 
-      <h2>6. What&apos;s next</h2>
+      <h2>7. What&apos;s next</h2>
       <ul>
         <li>Test with real people of different ages, body types, clothes and rooms.</li>
         <li>Switch on the live 1-tip vs 3-tip test.</li>

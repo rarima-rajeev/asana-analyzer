@@ -17,8 +17,8 @@ SHARED = (
 )
 
 PROMPTS = {
-    "mountain-correct": "Front view. A person stands upright in yoga mountain pose: feet together, arms by the sides, shoulders level, body perfectly straight.",
-    "mountain-mistake": "Front view. A person stands in mountain pose but leans clearly to their right side, so the shoulders are tilted and the body is not straight.",
+    "mountain-correct": "Side view, full color. A person in parvatasana (mountain pose from the yoga sun salutation): feet together and both heels pressed flat on the floor, palms flat on the floor, hips lifted high as the peak of a sharp inverted V, arms and legs fully straight, back flat, head between the arms with the gaze toward the feet.",
+    "mountain-mistake": "Side view, full color. A person attempting parvatasana (mountain pose from the yoga sun salutation), an inverted V with palms on the floor and hips raised, but making a beginner mistake: both knees are deeply bent and both heels are lifted high off the floor.",
     "palmtree-correct": "Side view. A person in palm tree pose: standing tall on tiptoes with both heels lifted high, fingers interlocked with palms turned up, both arms stretched straight up overhead, elbows locked, body in one straight line.",
     "palmtree-mistake": "Side view. A person in palm tree pose standing on tiptoes with heels lifted and fingers interlocked above the head, but the elbows are clearly bent, so the hands rest just above the head instead of reaching straight up.",
     "warrior2-correct": "Front view. A person in warrior two pose: wide stance, front knee bent to a right angle over the ankle, back leg straight, arms stretched out level at shoulder height.",

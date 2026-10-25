@@ -35,7 +35,7 @@ export async function runEval() {
         score: a.score,
         looksCorrect: a.looksCorrect,
         flaggedRule: a.worstRule?.id ?? null,
-        expectedRule: kind === "mistake" ? pose.mistakeRule : null,
+        expectedRules: kind === "mistake" ? pose.mistakeRules : null,
         rules: a.rules.map(({ id, passRate, typical, unit }) => ({ id, passRate, typical, unit })),
         tip: tip.tips[0],
         tipSource: tip.source,

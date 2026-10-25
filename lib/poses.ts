@@ -67,7 +67,7 @@ export type Pose = {
   view: "front" | "side";
   howTo: string;
   mistake: string; // the common mistake shown in the sample clip
-  mistakeRule: string; // which rule that mistake should break
+  mistakeRules: string[]; // which rule(s) that mistake should break
   rules: Rule[];
 };
 
@@ -75,26 +75,49 @@ export const POSES: Pose[] = [
   {
     id: "mountain",
     name: "Mountain",
-    view: "front",
-    howTo: "Stand tall, feet together, arms by your sides.",
-    mistake: "Leaning to one side",
-    mistakeRule: "straight",
+    view: "side",
+    howTo: "Parvatasana: palms and feet on the floor, heels down, hips high, body in an inverted V.",
+    mistake: "Knees bent, heels lifted",
+    mistakeRules: ["legs", "heels"],
     rules: [
       {
-        id: "straight",
-        label: "Body straight up, shoulders level",
-        tip: "Stand tall. Stack your shoulders over your hips.",
-        measure: (p) => Math.max(bodyLean(p), tiltFromFlat(p[L_SHOULDER], p[R_SHOULDER])),
-        unit: "° off straight",
-        pass: (v) => v <= 5,
+        id: "hips",
+        label: "Hips lifted high, body in an upside-down V",
+        tip: "Lift your hips up and back, making a tall upside-down V.",
+        measure: (p) => {
+          const [s, h, a] = seenSide(p) === "L" ? [p[L_SHOULDER], p[L_HIP], p[L_ANKLE]] : [p[R_SHOULDER], p[R_HIP], p[R_ANKLE]];
+          return angle(s, h, a);
+        },
+        unit: "° at the hips",
+        pass: (v, p) => v <= 110 && mid(p[L_HIP], p[R_HIP]).y < mid(p[L_SHOULDER], p[R_SHOULDER]).y,
+      },
+      {
+        id: "arms",
+        label: "Arms straight",
+        tip: "Straighten your arms and press your palms into the floor.",
+        measure: (p) => (seenSide(p) === "L" ? elbowL(p) : elbowR(p)),
+        unit: "° elbow angle",
+        pass: (v) => v >= 150,
       },
       {
         id: "legs",
         label: "Legs straight",
-        tip: "Straighten both legs and press your feet into the floor.",
-        measure: (p) => Math.min(kneeL(p), kneeR(p)),
+        tip: "Straighten your legs and gently press your heels toward the floor.",
+        measure: (p) => (seenSide(p) === "L" ? kneeL(p) : kneeR(p)),
         unit: "° knee angle",
-        pass: (v) => v >= 165,
+        pass: (v) => v >= 155,
+      },
+      {
+        id: "heels",
+        label: "Heels down on the floor",
+        tip: "Lower your heels and press them gently into the floor.",
+        // Heel height above the toes, as a share of torso length (same measure as Palm Tree's tiptoes).
+        measure: (p) => {
+          const [heel, toe] = seenSide(p) === "L" ? [p[L_HEEL], p[L_TOE]] : [p[R_HEEL], p[R_TOE]];
+          return Math.round(((toe.y - heel.y) / (torsoLength(p) || 1)) * 100);
+        },
+        unit: "% heel lift",
+        pass: (v) => v <= 6,
       },
     ],
   },
@@ -104,7 +127,7 @@ export const POSES: Pose[] = [
     view: "side",
     howTo: "Rise onto your tiptoes, fingers locked, palms up, arms stretched overhead.",
     mistake: "Elbows bent, arms not reaching up",
-    mistakeRule: "arms",
+    mistakeRules: ["arms"],
     rules: [
       {
         id: "arms",
@@ -143,7 +166,7 @@ export const POSES: Pose[] = [
     view: "front",
     howTo: "Wide stance, front knee bent, back leg straight, arms out level.",
     mistake: "Front knee barely bent",
-    mistakeRule: "frontKnee",
+    mistakeRules: ["frontKnee"],
     rules: [
       {
         id: "frontKnee",
@@ -178,7 +201,7 @@ export const POSES: Pose[] = [
     view: "side",
     howTo: "Feet together, bend your knees as if sitting back, arms up.",
     mistake: "Knees barely bent",
-    mistakeRule: "knees",
+    mistakeRules: ["knees"],
     rules: [
       {
         id: "knees",
@@ -204,7 +227,7 @@ export const POSES: Pose[] = [
     view: "front",
     howTo: "Wide stance, both legs straight, lean sideways, arms in one line.",
     mistake: "Front knee bent",
-    mistakeRule: "legs",
+    mistakeRules: ["legs"],
     rules: [
       {
         id: "legs",

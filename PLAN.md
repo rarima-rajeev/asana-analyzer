@@ -19,7 +19,7 @@
 ## The 5 poses: what we check (plain rules on joint angles)
 | Pose | Camera view | "Correct" means | Common mistake (in the mistake clip) | Fallback tip (spoken) |
 |---|---|---|---|---|
-| Mountain | front | Body straight up; shoulders level | Leaning to one side | "Stand tall. Stack your shoulders over your hips." |
+| Mountain (Parvatasana, inverted V) | side | Hips high in an inverted V; arms and legs straight; heels on the floor | Knees bent, heels lifted | "Straighten your legs and gently press your heels toward the floor." |
 | Palm Tree | side | On tiptoes, heels lifted; hands reaching high above the head; body in one line | Elbows bent, hands resting near the head | "Straighten your elbows and reach your palms up to the sky." |
 | Warrior II | front | Front knee bent to about a right angle; arms level at shoulder height | Front knee barely bent | "Bend your front knee more, over your ankle." |
 | Chair | side | Knees clearly bent (like sitting); chest lifted | Knees barely bent, standing too tall | "Sit back and lower your hips, like into a chair." |

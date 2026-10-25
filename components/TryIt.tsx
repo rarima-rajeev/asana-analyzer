@@ -6,6 +6,9 @@ import { POSES, Pose } from "@/lib/poses";
 import { Analysis, Frame, findBodyPoints, scoreFrames } from "@/lib/analyze";
 import { tipCount, track } from "@/lib/experiment";
 
+// Bump when sample videos are replaced, so browsers don't show an old cached copy.
+const VIDEO_VERSION = 3;
+
 type Source = { kind: "correct" | "mistake"; url: string };
 
 async function getTips(pose: Pose, a: Analysis, count: number): Promise<{ tips: string[]; source: string }> {
@@ -137,7 +140,7 @@ export default function TryIt() {
   }
 
   function pickSample(kind: "correct" | "mistake") {
-    setSource({ kind, url: `/videos/${pose.id}-${kind}.mp4` });
+    setSource({ kind, url: `/videos/${pose.id}-${kind}.mp4?v=${VIDEO_VERSION}` });
   }
 
   // Browsers can't change the volume of speech already playing, so restart the tip at the new volume.
