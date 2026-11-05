@@ -2,21 +2,25 @@
 // Gemini receives only numbers and labels — never the video.
 
 import { NextResponse } from "next/server";
+import { checkTip } from "@/lib/tipCheck";
 
 const MODEL = "gemini-3.5-flash-lite";
 
-type RuleIn = { label: string; passRate: number; typical: number; unit: string; tip: string };
+type RuleIn = { id: string; label: string; passRate: number; typical: number; unit: string; tip: string };
 type Body = { poseName: string; score: number; looksCorrect: boolean; rules: RuleIn[]; count: number };
 
 const PRAISE = "Nice work, that looks right. Breathe slowly and hold it steady.";
 
-function templateTips(body: Body): string[] {
-  if (body.looksCorrect) return [PRAISE];
+// The checks to coach on, weakest first (the same order Gemini is asked to follow).
+function weakRules(body: Body): RuleIn[] {
   return [...body.rules]
     .sort((a, b) => a.passRate - b.passRate)
     .filter((r) => r.passRate < 80)
-    .slice(0, body.count)
-    .map((r) => r.tip);
+    .slice(0, body.count);
+}
+
+function templateTips(body: Body): string[] {
+  return body.looksCorrect ? [PRAISE] : weakRules(body).map((r) => r.tip);
 }
 
 export async function POST(req: Request) {
@@ -55,7 +59,22 @@ Return JSON: {"tips": ["..."]}`;
     const text: string = data.candidates?.[0]?.content?.parts?.[0]?.text ?? "";
     const tips: string[] = (JSON.parse(text).tips ?? []).filter((t: unknown) => typeof t === "string" && t.trim());
     if (!tips.length) throw new Error("empty");
-    return NextResponse.json({ tips: tips.slice(0, body.looksCorrect ? 1 : count), source: "gemini" });
+
+    // Guardrail: check each tip; swap any that fail for the ready-made tip.
+    const targets = body.looksCorrect ? [null] : weakRules({ ...body, count });
+    let replaced = 0;
+    const checked = targets.map((rule, i) => {
+      const tip = tips[i];
+      const result = tip ? checkTip(tip, rule ? `${body.poseName}:${rule.id}` : null) : { ok: false as const, reason: "missing" };
+      if (result.ok) return tip;
+      replaced += 1;
+      console.warn(`[tip guardrail] ${body.poseName}: replaced "${tip ?? ""}" (${result.reason})`);
+      return rule ? rule.tip : PRAISE;
+    });
+    return NextResponse.json({
+      tips: checked,
+      source: replaced === 0 ? "gemini" : replaced === checked.length ? "template (guardrail)" : "gemini + template (guardrail)",
+    });
   } catch {
     return NextResponse.json({ tips: fallback, source: "template" });
   }
