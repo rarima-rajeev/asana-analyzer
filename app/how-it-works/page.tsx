@@ -36,7 +36,7 @@ export default function HowItWorks() {
         <div className="zone cloud">
           <h3>In the cloud</h3>
           <div className="box"><b>4. Write a friendly tip</b>Google Gemini turns the numbers into one plain sentence.</div>
-          <div className="box">If Gemini is slow or down, a ready-made tip is used instead.</div>
+          <div className="box">If Gemini is slow, down, or its tip fails a safety check, a ready-made tip is used instead.</div>
         </div>
       </div>
 
