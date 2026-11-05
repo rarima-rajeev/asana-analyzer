@@ -1,5 +1,6 @@
 import evalRows from "@/data/eval.json";
 import { POSES } from "@/lib/poses";
+import MoreProjects from "@/components/MoreProjects";
 
 export const metadata = { title: "Offline evals: Results & decisions · Asana Analyzer" };
 
@@ -115,6 +116,8 @@ export default function Results() {
         <li>Bring back &quot;use my own video&quot;, with safety checks first: block anything that isn&apos;t one person doing a pose, and show only the stick figure.</li>
         <li>Then, only if people use it: more poses and more camera angles.</li>
       </ul>
+
+      <MoreProjects />
     </>
   );
 }

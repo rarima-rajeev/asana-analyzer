@@ -122,3 +122,15 @@ th { background: #f3e9ef; font-weight: 600; }
 .pill { display: inline-block; padding: 2px 10px; border-radius: 999px; font-size: 14px; font-weight: 600; }
 .pill.yes { background: var(--accent-soft); color: var(--accent); }
 .pill.no { background: var(--warn-soft); color: var(--warn); }
+
+/* "More projects" card, same as the other portfolio sites, in this site's plum. */
+.more-projects { margin-top: 40px; padding: 26px 24px; border-radius: 18px; color: #fff;
+  background: linear-gradient(135deg, #8e3479 0%, #7b2869 55%, #5a1c4d 100%); }
+.more-projects h2 { margin: 0 0 6px; color: #fff; }
+.more-projects p { margin: 0 0 18px; color: #f6e8f1; }
+.more-links { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+@media (max-width: 560px) { .more-links { grid-template-columns: 1fr; } }
+.more-links a { display: flex; align-items: center; gap: 10px; padding: 14px 16px; border-radius: 12px; text-decoration: none;
+  color: #fff; font-weight: 600; background: rgba(255, 255, 255, 0.14); transition: background 0.15s; }
+.more-links a:hover { background: rgba(255, 255, 255, 0.24); }
+.more-arrow { margin-left: auto; opacity: 0.75; }
