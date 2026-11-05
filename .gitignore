@@ -9,3 +9,4 @@ scratch/
 .vercel
 .DS_Store
 scripts/__pycache__/
+notion-notes.md
